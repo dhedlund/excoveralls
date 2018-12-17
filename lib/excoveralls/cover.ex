@@ -7,7 +7,6 @@ defmodule ExCoveralls.Cover do
   Compile the beam files for coverage analysis.
   """
   def compile(compile_path) do
-    :cover.stop
     :cover.start
     :cover.compile_beam_directory(compile_path |> string_to_charlist)
   end
