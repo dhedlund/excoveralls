@@ -81,7 +81,7 @@ defmodule ExCoveralls.StatsTest do
   end
 
   test_with_mock "append sub app name", Cover, [module_path: fn(_) -> @source end] do
-    stats = Stats.append_sub_app_name(@source_info, "subapp", "apps")
+    stats = Stats.append_sub_app_name(@source_info, "subapp")
     assert(List.first(stats)[:name] == "apps/subapp/test/fixtures/test.ex")
   end
 
