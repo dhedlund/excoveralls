@@ -41,8 +41,7 @@ defmodule Mix.Tasks.Coveralls do
 
     all_options =
       if all_options[:umbrella] do
-        sub_apps = ExCoveralls.SubApps.parse(Mix.Dep.Umbrella.loaded)
-        all_options ++ [sub_apps: sub_apps, apps_path: Mix.Project.config[:apps_path]]
+        all_options ++ [relative_to: ExCoveralls.PathReader.base_path]
       else
         all_options
       end

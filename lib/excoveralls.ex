@@ -31,22 +31,22 @@ defmodule ExCoveralls do
   def start(compile_path, _opts) do
     Cover.compile(compile_path)
     fn() ->
-      execute(ConfServer.get, compile_path)
+      execute(ConfServer.get)
     end
   end
 
-  def execute(options, compile_path) do
+  def execute(options) do
     stats = Cover.modules() |> Stats.report() |> Enum.map(&Enum.into(&1, %{}))
 
     if options[:umbrella] do
-      store_stats(stats, options, compile_path)
+      store_stats(stats, options)
     else
       analyze(stats, options[:type] || "local", options)
     end
   end
 
-  defp store_stats(stats, options, _compile_path) do
-    stats = Stats.append_sub_app_name(stats, options[:sub_apps])
+  defp store_stats(stats, options) do
+    stats = Stats.append_sub_app_name(stats, options[:relative_to])
     Enum.each(stats, fn(stat) -> StatServer.add(stat) end)
   end
 
